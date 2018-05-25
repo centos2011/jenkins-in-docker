@@ -4,9 +4,17 @@ MAINTAINER Anton Fisher <a.fschr@gmail.com>
 USER root
 
 # Set timezone
-RUN echo "America/Los_Angeles" > /etc/timezone &&\
-    dpkg-reconfigure --frontend noninteractive tzdata &&\
-    date
+#RUN echo "America/Los_Angeles" > /etc/timezone &&\
+#    dpkg-reconfigure --frontend noninteractive tzdata &&\
+#    date
+
+ENV TZ 'Asia/Manila'
+    RUN echo $TZ > /etc/timezone && \
+    apt-get update && apt-get install -y apt-utils tzdata && \
+    rm /etc/localtime && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata && \
+    apt-get clean
 
 # Set locale
 RUN locale-gen en_US.UTF-8
