@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 docker run \
+    --restart=always \
     -d \
     --name jenkins-master \
     -p 8080:8080 \

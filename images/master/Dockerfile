@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.107.3
+FROM jenkins/jenkins:2.121.2
 MAINTAINER Dennis Joson <dennis.joson@gmail.com>
 
 # root user for Jenkins, need to get access to /var/run/docker.sock (fix this in the future!)
@@ -7,7 +7,7 @@ USER root
 # Environment
 ENV HOME /root
 ENV JENKINS_HOME /root/jenkins
-ENV JENKINS_VERSION 2.107.3
+ENV JENKINS_VERSION 2.121.2 
 
 # GitHub repository to store Jenkins configuration
 ENV GITHUB_USERNAME centos2011 
@@ -27,7 +27,7 @@ RUN /usr/local/bin/install-plugins.sh \
 #    dpkg-reconfigure --frontend noninteractive tzdata &&\
 #    date
 
-ENV TZ 'Asia/Manila'
+ENV TZ 'ETC/UTC'
     RUN echo $TZ > /etc/timezone && \
     apt-get update && apt-get install -y apt-utils tzdata && \
     rm /etc/localtime && \
