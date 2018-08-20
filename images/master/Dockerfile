@@ -1,8 +1,12 @@
-FROM jenkins/jenkins:2.121.2
+#FROM jenkins/jenkins:2.121.2
+FROm 467873314609.dkr.ecr.ap-southeast-1.amazonaws.com/pdax-jenkins:2.121.2
+
 MAINTAINER Dennis Joson <dennis.joson@gmail.com>
 
 # root user for Jenkins, need to get access to /var/run/docker.sock (fix this in the future!)
 USER root
+
+RUN apt-get update -y && apt-get install python-pip awscli -y 
 
 # Environment
 ENV HOME /root
@@ -18,9 +22,18 @@ RUN mkdir -p $JENKINS_HOME
 
 # Install Jenkins plugins
 RUN /usr/local/bin/install-plugins.sh \
-    scm-sync-configuration:0.0.10 \
-    workflow-aggregator:2.4 \
-    docker-workflow:1.8
+    scm-sync-configuration:latest \
+    workflow-aggregator:latest \
+    docker-workflow:latest \
+    github:latest \
+    greenballs:latest \
+    git:latest \
+    structs:latest \
+    jackson2-api:latest
+
+#Install boto
+RUN pip install boto --user
+RUN pip install boto3 --user
 
 # Set timezone
 #RUN echo "Asia/Taipei" > /etc/timezone &&\
